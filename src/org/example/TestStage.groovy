@@ -4,11 +4,15 @@ package org.example
 
 def call() {
   echo 'Running tests for the application...'
-  dir('app') {
+  dir('8 - Build Automation & CI-CD with Jenkins/jenkins-exercises/app') {
     sh 'npm install'
-    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-      sh 'npm test'
-      error "Tests failed. Please fix the failing tests and rerun the pipeline."
+    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+      script {
+        def testResult = sh(script: 'npm test -- --detectOpenHandles', returnStatus: true)
+        if (testResult != 0) {
+          error "Tests failed. Please fix the failing tests and rerun the pipeline."
+        }
+      }
     }
   }
 }
