@@ -2,16 +2,17 @@
 
 package org.example
 
-def call(String imageVersion) {
+def call(String imageVersion, String githubRepoUrl) {
   echo 'Committing the version increment to Git...'
-  withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
-    sh "git config user.email 'jenkins@example.com'"
-    sh "git config user.name 'Jenkins'"
-    sh "git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/your-username/your-repository.git"
-    dir('app') {
-      sh "git add package.json"
+  sh 'git config --global user.email "jenkins@example.com"'
+  sh 'git config --global user.name "Jenkins"'
+  withCredentials([usernamePassword(credentialsId: 'github-pat', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PAT')]) {
+    def gitRepoUrl = githubRepoUrl
+    sh "git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PAT}@${gitRepoUrl.replace('https://', '')}"
+    dir('8 - Build Automation & CI-CD with Jenkins/jenkins-exercises/app') {
+      sh 'git add package.json'
     }
     sh "git commit -m 'Update version to ${imageVersion}'"
-    sh "git push origin HEAD:main"
+    sh 'git push origin HEAD:main'
   }
 }
