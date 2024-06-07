@@ -2,8 +2,8 @@
 
 package org.example
 
-def call(String versionIncrement) {
-  echo "Incrementing application version with ${versionIncrement}"
+def call() {
+  echo "Entering versioning stage..."
   dir('8 - Build Automation & CI-CD with Jenkins/jenkins-exercises/app') {
     if (fileExists('package.json')) {
       def versionType = input(
