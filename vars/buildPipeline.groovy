@@ -39,13 +39,4 @@ def call(Map pipelineParams) {
       commitStage(env.IMAGE_TAG, pipelineParams.githubRepoUrl)
     }
   }
-
-  post {
-    success {
-      echo 'Pipeline executed successfully!'
-    }
-    failure {
-      echo 'Pipeline execution failed!'
-    }
-  }
 }
