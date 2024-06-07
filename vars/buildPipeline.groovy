@@ -8,20 +8,12 @@ def call(Map pipelineParams) {
       IMAGE_TAG = "${env.IMAGE_VERSION}"
     }
 
-    parameters {
-      choice(
-        name: 'VERSION_INCREMENT',
-        choices: ['patch', 'minor', 'major'],
-        description: 'Select the version increment type'
-      )
-    }
-
     stages {
       stage('Increment Version') {
         steps {
           script {
             def versioningStage = new org.example.VersioningStage()
-            versioningStage(params.VERSION_INCREMENT)
+            versioningStage()
           }
         }
       }
