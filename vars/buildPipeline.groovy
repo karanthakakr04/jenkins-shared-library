@@ -1,9 +1,6 @@
 #!/usr/bin/env groovy
 
 def call(Map pipelineParams) {
-  environment {
-    IMAGE_TAG = "${env.IMAGE_VERSION}"
-  }
 
   stage('Increment Version') {
     script {
@@ -22,21 +19,21 @@ def call(Map pipelineParams) {
   stage('Build Image') {
     script {
       def buildStage = new org.example.BuildStage()
-      buildStage(pipelineParams.dockerhubUsername, pipelineParams.dockerhubRepo, env.IMAGE_TAG)
+      buildStage(pipelineParams.dockerhubUsername, pipelineParams.dockerhubRepo, env.IMAGE_VERSION)
     }
   }
 
   stage('Deploy') {
     script {
       def deployStage = new org.example.DeployStage()
-      deployStage(pipelineParams.dockerhubUsername, pipelineParams.dockerhubRepo, env.IMAGE_TAG)
+      deployStage(pipelineParams.dockerhubUsername, pipelineParams.dockerhubRepo, env.IMAGE_VERSION)
     }
   }
 
   stage('Commit Version') {
     script {
       def commitStage = new org.example.CommitStage()
-      commitStage(env.IMAGE_TAG, pipelineParams.githubRepoUrl)
+      commitStage(env.IMAGE_VERSION, pipelineParams.githubRepoUrl)
     }
   }
 }
