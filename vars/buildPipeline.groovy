@@ -25,7 +25,7 @@ def call(Map pipelineParams) {
 
   stage('Push Image') {
     script {
-      def deployStage = new org.example.DeployStage()
+      def deployStage = new org.example.PushStage()
       deployStage(pipelineParams.dockerhubUsername, pipelineParams.dockerhubRepo, env.IMAGE_VERSION)
     }
   }
