@@ -3,7 +3,7 @@
 package org.example
 
 def call() {
-  echo "Entering versioning stage..."
+  echo 'Increment the application version...'
   dir('8 - Build Automation & CI-CD with Jenkins/jenkins-exercises/app') {
     if (fileExists('package.json')) {
       def versionType = input(
