@@ -3,7 +3,7 @@
 package org.example
 
 def call(String imageVersion, String githubRepoUrl) {
-  echo 'Committing the version increment to Git...'
+  echo 'Commit the version increment to Git...'
   sh 'git config --global user.email "jenkins@example.com"'
   sh 'git config --global user.name "Jenkins"'
   withCredentials([usernamePassword(credentialsId: 'github-pat', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PAT')]) {
