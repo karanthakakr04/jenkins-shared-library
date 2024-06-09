@@ -3,7 +3,7 @@
 package org.example
 
 def call() {
-  echo 'Running tests for the application...'
+  echo 'Run tests for the application...'
   dir('8 - Build Automation & CI-CD with Jenkins/jenkins-exercises/app') {
     sh 'npm install'
     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
